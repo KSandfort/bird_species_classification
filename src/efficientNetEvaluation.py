@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     #print(train_data.class_names)
 
-    model = keras.models.load_model('models/EfficientNetB0-525-(224 X 224)- 98.97.h5', custom_objects={'F1_score': 'F1_score'})
+    model = keras.models.load_model('../models/EfficientNetB0-525-(224 X 224)- 98.97.h5', custom_objects={'F1_score': 'F1_score'})
 
     predictions = model.predict(test_data)
     print(predictions)

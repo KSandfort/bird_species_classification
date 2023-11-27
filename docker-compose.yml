@@ -1,0 +1,19 @@
+version: "3.1"
+
+services:
+  jupyter:
+    container_name: bird-class
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - "./:/tf/code"
+      - "~/Documents/bird_class/input/:/input/" # Input data (bird images)
+      - "~/Documents/bird_class/output/:/output/" # Output data (logs, trained models)
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: all
+            capabilities: [gpu]
