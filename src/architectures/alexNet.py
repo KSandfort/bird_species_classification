@@ -2,8 +2,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from keras import datasets, layers, models, losses
 
-
-def get_model(input_shape, num_classes):
+def get_alexNet_model(input_shape, num_classes):
     model = models.Sequential()
     model.add(layers.experimental.preprocessing.Resizing(224, 224, interpolation="bilinear",
                                                          input_shape=input_shape))

@@ -8,8 +8,8 @@ services:
       - "8888:8888"
     volumes:
       - "./:/tf/code"
-      - "~/Documents/bird_class/input/:/input/" # Input data (bird images)
-      - "~/Documents/bird_class/output/:/output/" # Output data (logs, trained models)
+      - "~/Documents/bird_class/input/:/tf/input/" # Input data (bird images)
+      - "~/Documents/bird_class/output/:/tf/output/" # Output data (logs, trained models)
     deploy:
       resources:
         reservations:
