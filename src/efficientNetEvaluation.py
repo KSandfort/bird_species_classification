@@ -1,7 +1,7 @@
 import keras
 
 """
-This class tests the provided EfficientNet model on the dataset.
+This class tests the provided EfficientNet models on the dataset.
 """
 if __name__ == '__main__':
 
