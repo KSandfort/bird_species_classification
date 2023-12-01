@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -22,7 +23,16 @@ def create_logs():
         plt.title('Model Accuracy')
         plt.xlabel('Epoch')
         plt.ylabel('Accuracy')
-        plt.show()
+        plt.savefig(os.path.join(output_path, 'accuracy.png'))
+
+        plt.figure()
+        plt.plot(log_values[:, 0], log_values[:, 2], label='Training Loss')
+        plt.plot(log_values[:, 0], log_values[:, 4], label='Validation Loss')
+        plt.legend()
+        plt.title('Model Loss')
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.savefig(os.path.join(output_path, 'loss.png'))
 
 
 if __name__ == '__main__':
