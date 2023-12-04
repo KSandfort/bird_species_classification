@@ -3,7 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def create_logs():
-    with open('tf/output/logs/training_alexNet_2023_11_27_16_16_10.log', 'r') as f:
+
+    log_path = 'tf/output/logs/training_alexNet_2023_11_27_16_16_10.log'
+
+    with open(log_path, 'r') as f:
         # Read data from log file
         f.readline()  # Remove first line (header)
         lines = [line.rstrip() for line in f]
@@ -15,21 +18,26 @@ def create_logs():
 
         # Create plots
         output_path = '../results/plots'
-        # Accuracy
 
+        # Extract model name
+        name_info = log_path.split('_')
+        model_name = name_info[1]
+
+        # Accuracy
         plt.plot(log_values[:, 0], log_values[:, 1], label='Training Accuracy')
         plt.plot(log_values[:, 0], log_values[:, 3], label='Validation Accuracy')
         plt.legend()
-        plt.title('Model Accuracy')
+        plt.title(f'{model_name} Accuracy')
         plt.xlabel('Epoch')
         plt.ylabel('Accuracy')
         plt.savefig(os.path.join(output_path, 'accuracy.png'))
 
+        # Loss
         plt.figure()
         plt.plot(log_values[:, 0], log_values[:, 2], label='Training Loss')
         plt.plot(log_values[:, 0], log_values[:, 4], label='Validation Loss')
         plt.legend()
-        plt.title('Model Loss')
+        plt.title(f'{model_name} Loss')
         plt.xlabel('Epoch')
         plt.ylabel('Loss')
         plt.savefig(os.path.join(output_path, 'loss.png'))

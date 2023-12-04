@@ -22,9 +22,9 @@ if __name__ == '__main__':
     train_data, test_data, val_data = data_loader.get_data(input_path)
 
     model_identifiers = [
-        #'inceptionV3',
+        'inceptionV3',
         #'alexNet'
-        'efficientNetB0'
+        #'efficientNetB0'
     ]
 
     # Run training for different models specified in model_identifiers
