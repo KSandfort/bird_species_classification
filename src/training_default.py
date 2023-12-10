@@ -8,7 +8,6 @@ from architectures.efficientNetB0 import get_efficientNetB0_model
 import keras
 import os
 
-
 if __name__ == '__main__':
 
     num_epochs = 50                 # Number of training epochs
@@ -22,8 +21,8 @@ if __name__ == '__main__':
     train_data, test_data, val_data = data_loader.get_data(input_path)
 
     model_identifiers = [
-        'inceptionV3',
-        #'alexNet'
+        #'inceptionV3',
+        'alexNet'
         #'efficientNetB0'
     ]
 
