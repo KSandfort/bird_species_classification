@@ -21,8 +21,8 @@ if __name__ == '__main__':
     train_data, test_data, val_data = data_loader.get_data(input_path)
 
     model_identifiers = [
-        #'inceptionV3',
-        'alexNet'
+        'inceptionV3',
+        #'alexNet'
         #'efficientNetB0'
     ]
 

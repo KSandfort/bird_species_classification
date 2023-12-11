@@ -76,14 +76,14 @@ if __name__ == '__main__':
     train_data, test_data, val_data = data_loader.get_data(input_path)
 
     # Step 2: Combine Test-, Training-, Validation data into one set
-    train_unbatched = train_data.unbatch()
-    test_unbatched = test_data.unbatch()
-    val_unbatched = val_data.unbatch()
+    #train_unbatched = train_data.unbatch()
+    #test_unbatched = test_data.unbatch()
+    #val_unbatched = val_data.unbatch()
 
-    combined_unbatched = tf.data.Dataset.concatenate(train_unbatched, test_unbatched)
-    combined_unbatched = tf.data.Dataset.concatenate(combined_unbatched, val_unbatched)
+    #combined_unbatched = tf.data.Dataset.concatenate(train_data, test_data)
+    #combined_unbatched = tf.data.Dataset.concatenate(combined_unbatched, val_data)
 
-    dataset_cardinality = tf.data.experimental.cardinality(combined_unbatched).numpy()
+    dataset_cardinality = tf.data.experimental.cardinality(train_data).numpy()
     print("Dataset Cardinality:", dataset_cardinality)
 
     #combined_batched = combined_unbatched.batch(32)

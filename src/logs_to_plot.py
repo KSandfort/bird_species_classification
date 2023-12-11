@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 def create_logs():
 
-    log_path = 'tf/output/logs/training_inceptionV3_2023_12_4_12_59_49.log'
+    log_path = 'tf/output/logs/training_inceptionV3_2023_12_11_9_0_25.log'
 
     with open(log_path, 'r') as f:
         # Read data from log file
@@ -40,7 +40,7 @@ def create_logs():
         plt.title(f'{model_name} Loss')
         plt.xlabel('Epoch')
         plt.ylabel('Loss')
-        plt.savefig(os.path.join(output_path, f'loss{model_name}.png'))
+        plt.savefig(os.path.join(output_path, f'loss_{model_name}.png'))
 
 
 if __name__ == '__main__':
