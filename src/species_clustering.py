@@ -1,50 +1,31 @@
+import numpy as np
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+import tensorflow as tf
+from sklearn.manifold import TSNE
+from PIL import Image
+import os
+
+from keras.preprocessing import image
+from keras.applications.vgg16 import VGG16, preprocess_input
+from keras.models import Model
+
 import data_loader
 
+def extract_features(image):
+    base_model = tf.keras.applications.VGG16(
+        weights='imagenet',
+        include_top=False,
+        input_shape=(224, 224, 3)
+    )
+    model = Model(inputs=base_model.input, outputs=base_model.get_layer('block5_conv2').output)
+    features = model.predict(image[0])
+    return features.flatten()
+
 if __name__ == '__main__':
-    import numpy as np
-    from sklearn.cluster import KMeans
-    from sklearn.decomposition import PCA
-    from sklearn.preprocessing import StandardScaler
-    import tensorflow as tf
-    from sklearn.manifold import TSNE
-    from PIL import Image
-    import os
-
-    from keras.preprocessing import image
-    from keras.applications.vgg16 import VGG16, preprocess_input
-    from keras.models import Model
-
-
     # --- All garbage from here ---
     """
-    # Define a function to extract features from images using the VGG model
-    def extract_features_vgg(image_path):
-        img = image.load_img(image_path, target_size=(224, 224, 3))  # VGG's input size
-        img_array = image.img_to_array(img)
-        img_array = np.expand_dims(img_array, axis=0)
-        img_array = preprocess_input(img_array)  # Preprocess the input
-
-        # Get the features from a specific layer (adjust layer_name as needed)
-        model = Model(inputs=base_model.input, outputs=base_model.get_layer('block5_conv2').output)
-        features = model.predict(img_array)
-        return features.flatten()  # Flatten the features to a 1D array
-
-
-    # Assuming you have a list of paths to your image files
-    image_paths = ['path_to_image_1.jpg', 'path_to_image_2.jpg', ...]
-
-    # Extract features from images
-    all_features = []
-    for path in image_paths:
-        features = extract_features(path)
-        all_features.append(features)
-
-    # Convert the list of feature vectors to a numpy array
-    all_features = np.array(all_features)
-
-    # Standardize the features
-    scaler = StandardScaler()
-    scaled_features = scaler.fit_transform(all_features)
 
     # Reduce dimensionality using PCA
     pca = PCA(n_components=50)  # Adjust the number of components as needed
@@ -72,30 +53,47 @@ if __name__ == '__main__':
 
     # Step 1: Load Data
     input_path = 'tf/input'
+
     #input_path = 'home/konstantin/Documents/bird_class'  # Change for container version
-    train_data, test_data, val_data = data_loader.get_data(input_path)
+    train_data, test_data, val_data = data_loader.get_data_unbatched(input_path)
 
     # Step 2: Combine Test-, Training-, Validation data into one set
-    #train_unbatched = train_data.unbatch()
-    #test_unbatched = test_data.unbatch()
-    #val_unbatched = val_data.unbatch()
+    """
+    train_unbatched = train_data.unbatch()
+    test_unbatched = test_data.unbatch()
+    val_unbatched = val_data.unbatch()
 
-    #combined_unbatched = tf.data.Dataset.concatenate(train_data, test_data)
-    #combined_unbatched = tf.data.Dataset.concatenate(combined_unbatched, val_data)
+    combined_unbatched = tf.data.Dataset.concatenate(train_data, test_data)
+    combined_unbatched = tf.data.Dataset.concatenate(combined_unbatched, val_data)
 
-    dataset_cardinality = tf.data.experimental.cardinality(train_data).numpy()
+    dataset_cardinality = tf.data.experimental.cardinality(combined_unbatched).numpy()
     print("Dataset Cardinality:", dataset_cardinality)
 
     #combined_batched = combined_unbatched.batch(32)
-
-    # Step 2.1: Divide set into species by class label
+    """
 
     # Step 3: Image pre-processing for all images
 
     # Step 4: Extract features in a pre-trained VGG model
-    # Step 4.1 Scale, all features
+    all_features = []
+    #for img in train_data:
+    for i in range(10):
+        features = extract_features(train_data[i])
+        all_features.append(features)
+
+    # Convert to np array
+    all_features = np.array(all_features)
+
+    print(all_features)
+
+    # Step 4.1 Scale (standardise) all features
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(all_features)
 
     # Step 5: Run PCA on all features
+    num_components = 10
+    pca = PCA(n_components=num_components)
+    reduced_features = pca.fit_transform(scaled_features)
 
     # Step 6: Apply KMeans clustering to each class
 
