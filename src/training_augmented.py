@@ -7,7 +7,6 @@ from architectures.inceptionV3 import get_inceptionV3_model
 from architectures.alexNet import get_alexNet_model
 from architectures.efficientNetB0 import get_efficientNetB0_model
 import keras
-from keras import layers
 import os
 
 
