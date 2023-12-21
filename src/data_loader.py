@@ -19,13 +19,13 @@ def get_data(directory, augmented=False):
         preprocess_input = tf.keras.applications.inception_v3.preprocess_input
         data_generator = ImageDataGenerator(
             preprocessing_function=preprocess_input,
-            rotation_range=20,  # Rotate images randomly within ±20 degrees
-            width_shift_range=0.2,  # Shift images horizontally by 20% of total width
-            height_shift_range=0.2,  # Shift images vertically by 20% of total height
-            shear_range=0.2,  # Apply shear transformation
-            zoom_range=0.2,  # Zoom images randomly by 20%
-            horizontal_flip=True,  # Flip images horizontally
-            fill_mode='nearest'  # Fill in newly created pixels after rotation or shifting
+            rotation_range=20,
+            width_shift_range=0.2,
+            height_shift_range=0.2,
+            shear_range=0.2,
+            zoom_range=0.2,
+            horizontal_flip=True,
+            fill_mode='nearest'
         )
 
         train_data = data_generator.flow_from_directory(
@@ -52,10 +52,11 @@ def get_data(directory, augmented=False):
 
     return train_data, test_data, val_data
 
-def get_data_unbatched(dir):
-    train_dir = f'{dir}/train'
-    test_dir = f'{dir}/test'
-    val_dir = f'{dir}/valid'
+
+def get_data_unbatched(directory):
+    train_dir = f'{directory}/train'
+    test_dir = f'{directory}/test'
+    val_dir = f'{directory}/valid'
 
     # Rescale
     train_datagen = ImageDataGenerator(rescale=1. / 255)
