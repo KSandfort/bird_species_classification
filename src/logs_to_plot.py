@@ -2,13 +2,15 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def create_logs():
 
-    log_path = 'tf/output/logs/training_inceptionV3_2023_12_11_9_0_25.log'
+    # Change path to save it to your desired log file (will be created during runtime)
+    log_path = 'tf/output/logs/training_inceptionV3_2023_12_21_0_7_7_augmented.log'
 
+    # Read data from log file
     with open(log_path, 'r') as f:
-        # Read data from log file
-        f.readline()  # Remove first line (header)
+        f.readline()  # Remove header
         lines = [line.rstrip() for line in f]
         rows = []
         for line in lines:
@@ -16,14 +18,14 @@ def create_logs():
         log_values = np.array(rows, dtype=np.float64)
         print(log_values)
 
-        # Create plots
+        # Define output path
         output_path = '../results/plots'
 
         # Extract model name
         name_info = log_path.split('_')
         model_name = name_info[1]
 
-        # Accuracy
+        # Create Accuracy Plot
         plt.plot(log_values[:, 0], log_values[:, 1], label='Training Accuracy')
         plt.plot(log_values[:, 0], log_values[:, 3], label='Validation Accuracy')
         plt.legend()
@@ -32,7 +34,7 @@ def create_logs():
         plt.ylabel('Accuracy')
         plt.savefig(os.path.join(output_path, f'accuracy_{model_name}.png'))
 
-        # Loss
+        # Create Loss Plot
         plt.figure()
         plt.plot(log_values[:, 0], log_values[:, 2], label='Training Loss')
         plt.plot(log_values[:, 0], log_values[:, 4], label='Validation Loss')
@@ -45,5 +47,3 @@ def create_logs():
 
 if __name__ == '__main__':
     create_logs()
-
-

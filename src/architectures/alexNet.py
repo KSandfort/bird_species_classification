@@ -1,6 +1,7 @@
 import tensorflow as tf
 from keras import layers, models
 
+
 def get_alexNet_model(input_shape, num_classes):
     model = models.Sequential()
     model.add(tf.keras.layers.experimental.preprocessing.Resizing(224, 224, interpolation="bilinear",

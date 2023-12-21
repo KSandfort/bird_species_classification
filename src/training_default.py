@@ -12,14 +12,15 @@ if __name__ == '__main__':
 
     num_epochs = 50                 # Number of training epochs
     input_path = 'tf/input'         # Input path (of the images)
-    output_path = 'tf/output'
+    output_path = 'tf/output'       # Output path (of training results)
 
-    input_shape = (224, 224, 3)
-    num_classes = 525
+    input_shape = (224, 224, 3)     # 224 x 224 px with 3 channels (RGB)
+    num_classes = 525               # Number of classes (bird species)
 
     # Load data
     train_data, test_data, val_data = data_loader.get_data(input_path)
 
+    # Comment and un-comment as desired
     model_identifiers = [
         'inceptionV3',
         #'alexNet'
@@ -28,7 +29,6 @@ if __name__ == '__main__':
 
     # Run training for different models specified in model_identifiers
     for identifier in model_identifiers:
-
         if identifier == 'inceptionV3':
             model = get_inceptionV3_model(input_shape, num_classes)
         elif identifier == 'alexNet':
